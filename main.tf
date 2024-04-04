@@ -36,12 +36,32 @@ provider "aws" {
 */
 resource "aws_instance" "app_server" {
   ami           = "ami-0914547665e6a707c"
-  instance_type = var.env == "prod" ? "t3.micro" : "t3.nano"
+  instance_type = var.env == "prod" ? "t3.nano" : "t3.micro"
+  vpc_security_group_ids = [aws_security_group.sg_web.id]
+  key_name = ".pem File (Key Pair)"
+
+
 
   tags = {
     Name = "Amiran_tf-${var.env}"
     Env = var.env
     Terraform = "true"
     project = "hbs"
+  }
+}
+
+resource "aws_security_group" "sg_web" {
+  name = "${var.resource_alias}-${var.env}-sg"
+
+  ingress {
+    from_port   = "8080"
+    to_port     = "8080"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Env         = var.env
+    Terraform   = true
   }
 }

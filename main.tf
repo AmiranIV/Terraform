@@ -38,16 +38,21 @@ resource "aws_instance" "app_server" {
   ami           = "ami-0914547665e6a707c"
   instance_type = var.env == "prod" ? "t3.nano" : "t3.micro"
   vpc_security_group_ids = [aws_security_group.sg_web.id]
-  key_name = ".pem File (Key Pair)"
+  key_name = ".pem file name without pem"
 
 
 
   tags = {
-    Name = "Amiran_tf-${var.env}"
+    Name = "${var.resource_alias}-${var.env}"
     Env = var.env
     Terraform = "true"
     project = "hbs"
   }
+}
+
+resource "aws_ec2_instance_state" "test" {
+  instance_id = aws_instance.app_server.id
+  state       = "running"
 }
 
 resource "aws_security_group" "sg_web" {

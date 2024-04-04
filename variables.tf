@@ -7,5 +7,5 @@ variable "env" {
 variable "resource_alias" {
   description = "Your Name"
   type        = string
-  default     = "Amiraniv"
+  default     = "amiraniv"
 }

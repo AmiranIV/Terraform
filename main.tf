@@ -7,7 +7,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "4.16"
+      version = "~> 4.16"
     }
   }
 
@@ -38,7 +38,8 @@ resource "aws_instance" "app_server" {
   ami           = "ami-0914547665e6a707c"
   instance_type = var.env == "prod" ? "t3.nano" : "t3.micro"
   vpc_security_group_ids = [aws_security_group.sg_web.id]
-  key_name = ".pem file name without pem"
+  key_name = "AmiranIV-KP" (example needed .pem file name without .pem Key pair type rsa basically)
+  depends_on = [aws_s3_bucket.data_bucket]
 
 
 
@@ -66,6 +67,15 @@ resource "aws_security_group" "sg_web" {
   }
 
   tags = {
+    Env         = var.env
+    Terraform   = true
+  }
+}
+resource "aws_s3_bucket" "data_bucket" {
+  bucket =  "${var.resource_alias}-tf--bucket"
+
+  tags = {
+    Name        = "${var.resource_alias}-bucket"
     Env         = var.env
     Terraform   = true
   }

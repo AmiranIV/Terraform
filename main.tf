@@ -35,10 +35,10 @@ provider "aws" {
  For full description of this resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
 */
 resource "aws_instance" "app_server" {
-  ami           = "ami-0914547665e6a707c"
+  ami = data.aws_ami.ubuntu_ami.id
   instance_type = var.env == "prod" ? "t3.nano" : "t3.micro"
   vpc_security_group_ids = [aws_security_group.sg_web.id]
-  key_name = "AmiranIV-KP" (pem file name) 
+  key_name = "AmiranIV-KP"
   depends_on = [aws_s3_bucket.data_bucket]
   subnet_id = module.app_vpc.public_subnets[0]
 
@@ -104,4 +104,14 @@ module "app_vpc" {
 
 data "aws_availability_zones" "available_azs" {
   state = "available"
+}
+
+data "aws_ami" "ubuntu_ami" {
+  most_recent = true
+  owners      = ["099720109477"]  # Canonical owner ID for Ubuntu AMIs
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
 }

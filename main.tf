@@ -38,8 +38,9 @@ resource "aws_instance" "app_server" {
   ami           = "ami-0914547665e6a707c"
   instance_type = var.env == "prod" ? "t3.nano" : "t3.micro"
   vpc_security_group_ids = [aws_security_group.sg_web.id]
-  key_name = "AmiranIV-KP" (example needed .pem file name without .pem Key pair type rsa basically)
+  key_name = "AmiranIV-KP" (pem file name) 
   depends_on = [aws_s3_bucket.data_bucket]
+  subnet_id = module.app_vpc.public_subnets[0]
 
 
 
@@ -81,15 +82,14 @@ resource "aws_s3_bucket" "data_bucket" {
   }
 }
 
-
 module "app_vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.14.0"
+  version = "~> 3.14.0"
 
   name = "${var.resource_alias}-vpc"
   cidr = var.vpc_cidr
 
-  azs             = ["<az1>", "<az2>", "..."]
+  azs             = ["eu-north-1a", "eu-north-1b","eu-north-1c"]
   private_subnets = var.vpc_private_subnets
   public_subnets  = var.vpc_public_subnets
 

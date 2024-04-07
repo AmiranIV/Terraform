@@ -13,7 +13,7 @@
 
 <div>
   <!-- Replace the URLs in href and src attributes with your own links -->
-  <a href="https://www.linkedin.com/in/amiran-ivgi-00aa77256"><img src="https://shields.io/badge/CI-Passing-brightgreen" alt="Linkedin"></a>
+  <a href="https://www.linkedin.com/in/amiran-ivgi-00aa77256"><img src="https://shields.io/badge/Linkedin" alt="Linkedin"></a>
   <br>
   <!-- Add more badges as needed -->
 </div>

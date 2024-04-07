@@ -89,7 +89,7 @@ module "app_vpc" {
   name = "${var.resource_alias}-vpc"
   cidr = var.vpc_cidr
 
-  azs             = ["eu-north-1a", "eu-north-1b","eu-north-1c"]
+  azs             = data.aws_availability_zones.available_azs.names
   private_subnets = var.vpc_private_subnets
   public_subnets  = var.vpc_public_subnets
 
@@ -100,4 +100,8 @@ module "app_vpc" {
     Env         = var.env
     Terraform   = true
   }
+}
+
+data "aws_availability_zones" "available_azs" {
+  state = "available"
 }

@@ -13,9 +13,8 @@
 
 <div>
   <!-- Replace the URLs in href and src attributes with your own links -->
-  <a href="[https://github.com/yourusername/yourrepository/action](https://www.linkedin.com/in/amiran-ivgi-00aa77256/)s"><img src="https://shields.io/badge/CI-Passing-brightgreen" alt="Linkedin"></a>
+  <a href="https://www.linkedin.com/in/amiran-ivgi-00aa77256"><img src="https://shields.io/badge/CI-Passing-brightgreen" alt="Linkedin"></a>
   <br>
-  <a href="https://your.notebook.link"><img src="https://yourimageurl.svg" alt="Run on Your Platform"></a>
   <!-- Add more badges as needed -->
 </div>
 <br>
